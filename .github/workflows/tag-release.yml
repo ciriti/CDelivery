@@ -2,7 +2,7 @@ name: GitHub Tag and Release
 
 on:
   push:
-    branches:  [ master ] #[ release/* ]
+    branches:  [ test-release ] #[ release/* ]
 
 jobs:
   build:
