@@ -1,6 +1,6 @@
-package io.github.ciriti.changelog
+package io.github.ciriti.replaceinfile
 
-import io.github.ciriti.changelog.Constants.TASK_NAME
+import io.github.ciriti.replaceinfile.Constants.TASK_NAME
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.Assert
@@ -12,7 +12,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.* // ktlint-disable
 
-class ChangeLogUpdatePluginTest {
+class ReplaceInFilePluginTest {
 
     @Rule
     @JvmField

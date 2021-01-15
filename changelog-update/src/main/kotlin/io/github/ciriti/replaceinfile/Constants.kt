@@ -1,4 +1,4 @@
-package io.github.ciriti.changelog
+package io.github.ciriti.replaceinfile
 
 object Constants {
     const val TASK_NAME = "changeLogUpdate"
