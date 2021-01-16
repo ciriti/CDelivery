@@ -1,6 +1,6 @@
-package io.github.ciriti.changelog
+package io.github.ciriti.replaceinfile
 
-import io.github.ciriti.changelog.ChangeLogUpdateTask.Companion.updateChangelogByContent
+import io.github.ciriti.replaceinfile.ChangeLogUpdateTask.Companion.updateChangelogByContent
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
