@@ -45,7 +45,7 @@ class ReplaceInFilePluginTest {
 
         buildFile.appendText(
             "\n" + """
-            replaceInFileConfig{
+            replaceInFile{
                 docs{
                     doc{
                         path = "${readme.path}"
