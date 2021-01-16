@@ -49,7 +49,6 @@ class ChangeLogUpdatePluginTest {
                 changeLogPath = "${changelogFile.path}"
                 content = "$content"
                 version = "1.0.1"
-                list = ["",""]
             }
             """.trimIndent()
         )

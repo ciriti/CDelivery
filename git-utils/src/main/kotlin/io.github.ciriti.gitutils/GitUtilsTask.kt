@@ -4,11 +4,9 @@ import io.github.ciriti.gitutils.Constants.GROUP
 import org.codehaus.groovy.runtime.ProcessGroovyMethods
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
-import org.gradle.api.Project
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.TaskAction
 import java.io.File
-import java.lang.StringBuilder
 import javax.inject.Inject
 
 open class GitUtilsTask @Inject constructor(
@@ -52,7 +50,7 @@ open class GitUtilsTask @Inject constructor(
             GIT_USERNAME=<your github username>
             GIT_EMAIL=<your github email>
             ...
-        """.trimIndent()
+            """.trimIndent()
         )
     }
 
@@ -74,7 +72,6 @@ open class GitUtilsTask @Inject constructor(
                 checkFile(it)
                 "echo ============= > $it".runCommand(error = error)
                 "git add $it".runCommand(error = error)
-
             }
         "git commit -m \"committed files $files\"".runCommand(error = error)
         "git push".runCommand(error = error)
@@ -84,7 +81,7 @@ open class GitUtilsTask @Inject constructor(
         "echo ======================".runCommand(error = error)
         val output = logFile.readText()
         logFile.delete()
-        if(output.contains("[rejected]")){
+        if (output.contains("[rejected]")) {
             throw GradleException(output)
         }
         return "Success!!!"
@@ -97,7 +94,6 @@ open class GitUtilsTask @Inject constructor(
             .redirectError(ProcessBuilder.Redirect.PIPE)
             .start()
         process.waitForProcessOutput(System.out, error)
-
     }
 
     private fun Process.waitForProcessOutput(
@@ -141,7 +137,7 @@ open class GitUtilsTask @Inject constructor(
             throw GradleException(
                 """
                 the file [${file.path}] does not exist!!!
-            """.trimIndent()
+                """.trimIndent()
             )
         }
     }

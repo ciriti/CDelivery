@@ -22,3 +22,4 @@ jobs:
           ./gradlew bump-version-code:publishPlugins
           ./gradlew changelog-update:publishPlugins
           ./gradlew replace-in-file:publishPlugins
+          ./gradlew git-utils:publishPlugins

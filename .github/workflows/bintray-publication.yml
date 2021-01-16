@@ -21,3 +21,4 @@ jobs:
           ./gradlew bump-version-code:bintrayUpload
           ./gradlew changelog-update:bintrayUpload
           ./gradlew replace-in-file:bintrayUpload
+          ./gradlew git-utils:bintrayUpload
