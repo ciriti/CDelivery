@@ -1,7 +1,7 @@
 package io.github.ciriti.replaceinfile
 
-import kotlin.reflect.KProperty
 import org.gradle.api.Project
+import kotlin.reflect.KProperty
 
 internal class GradleProperty<T, V>(
     project: Project,
@@ -29,8 +29,8 @@ internal class GradleIntProperty<T>(
     }
 
     operator fun getValue(thisRef: T, property: KProperty<*>): Int =
-            this.property.get().toInt()
+        this.property.get().toInt()
 
     operator fun setValue(thisRef: T, property: KProperty<*>, value: Int) =
-            this.property.set(value as? Integer)
+        this.property.set(value as? Integer)
 }

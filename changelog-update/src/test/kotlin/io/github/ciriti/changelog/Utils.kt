@@ -1,7 +1,7 @@
 @file:JvmName("TestUtils")
 @file:Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 
-package io.github.ciriti.replaceinfile
+package io.github.ciriti.changelog
 
 import org.gradle.internal.impldep.org.junit.Assert
 import org.junit.rules.TemporaryFolder

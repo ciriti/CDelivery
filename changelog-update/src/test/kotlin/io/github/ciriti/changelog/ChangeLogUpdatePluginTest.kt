@@ -1,6 +1,6 @@
-package io.github.ciriti.replaceinfile
+package io.github.ciriti.changelog
 
-import io.github.ciriti.replaceinfile.Constants.TASK_NAME
+import io.github.ciriti.changelog.Constants.TASK_NAME
 import org.gradle.testkit.runner.GradleRunner
 import org.gradle.testkit.runner.TaskOutcome
 import org.junit.Assert

@@ -79,5 +79,4 @@ class ReplaceInFileTaskTest {
                 io.github.iriti:java-lib:0.2.0
         ```
     """.trimIndent()
-
 }

@@ -9,8 +9,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.* // ktlint-disable
 
 class ReplaceInFilePluginTest {
 
@@ -41,7 +39,7 @@ class ReplaceInFilePluginTest {
     }
 
     @Test
-    fun `GIVEN an config block with title==null VERIFY the CHANGELOG content`() {
+    fun `GIVEN 2 changes to apply to a file VERIFY the output`() {
 
         buildFile.appendText(
             "\n" + """

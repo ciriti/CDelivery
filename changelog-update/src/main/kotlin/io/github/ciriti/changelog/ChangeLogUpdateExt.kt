@@ -1,4 +1,4 @@
-package io.github.ciriti.replaceinfile
+package io.github.ciriti.changelog
 
 open class ChangeLogUpdateExt(
     var changeLogPath: String = "CHANGELOG.md",

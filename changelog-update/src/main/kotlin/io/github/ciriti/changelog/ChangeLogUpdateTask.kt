@@ -1,6 +1,6 @@
-package io.github.ciriti.replaceinfile
+package io.github.ciriti.changelog
 
-import io.github.ciriti.replaceinfile.Constants.GROUP
+import io.github.ciriti.changelog.Constants.GROUP
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
 import org.gradle.api.tasks.TaskAction

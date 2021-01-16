@@ -37,12 +37,12 @@ open class ReplaceInFileExt(project: Project) {
 }
 
 internal typealias DocInstanceConfigurationContainer =
-        NamedDomainObjectContainer<Doc>
+    NamedDomainObjectContainer<Doc>
 
 open class Doc(
     val name: String,
     project: Project
-){
+) {
     var path by GradleProperty(project, String::class.java, "")
     var find by GradleProperty(project, String::class.java, "")
     var replaceWith by GradleProperty(project, String::class.java, "")

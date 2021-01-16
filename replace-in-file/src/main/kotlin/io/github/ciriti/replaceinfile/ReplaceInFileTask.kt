@@ -28,14 +28,15 @@ open class ReplaceInFileTask @Inject constructor(
                     oldText = it.find,
                     newText = it.replaceWith
                 )
-                sb.append(content+"\n")
+                sb.append(content + "\n")
             }
         println(sb.toString())
     }
 
     companion object {
         fun updateDocument(file: File, oldText: String, newText: String): String {
-            if (!file.exists()) throw GradleException("""
+            if (!file.exists()) throw GradleException(
+                """
                 ${file.name} [${file.path}] doesn't exist!!!
                 """.trimIndent()
             )
