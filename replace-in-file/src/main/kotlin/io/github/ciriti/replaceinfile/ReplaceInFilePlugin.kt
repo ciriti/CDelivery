@@ -8,7 +8,10 @@ import org.gradle.api.Project
 class ReplaceInFilePlugin : Plugin<Project> {
 
     override fun apply(project: Project) {
-        val extension = project.extensions.create(EXTENSION_NAME, ReplaceInFileExt::class.java)
+        val extension: ReplaceInFileExt = project
+            .extensions
+            .create(EXTENSION_NAME, ReplaceInFileExt::class.java, project)
+
         project.tasks.create(TASK_NAME, ReplaceInFileTask::class.java, extension)
     }
 }

@@ -1,13 +1,12 @@
 package io.github.ciriti.replaceinfile
 
-import io.github.ciriti.replaceinfile.ReplaceInFileTask.Companion.updateChangelogByContent
+import io.github.ciriti.replaceinfile.ReplaceInFileTask.Companion.updateDocument
+import org.gradle.api.GradleException
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.* // ktlint-disable
 
 class ReplaceInFileTaskTest {
 
@@ -15,60 +14,70 @@ class ReplaceInFileTaskTest {
     @JvmField
     val testProjectDir: TemporaryFolder = TemporaryFolder()
 
-    private val changelogFile: File by lazy {
-        testProjectDir.newFile("CHANGELOG.md")
+    private val readme: File by lazy {
+        testProjectDir.newFile("README.md")
     }
 
     @Before
     fun setup() {
-        changelogFile.appendText("CHANGELOG.txt".readFileContent())
+        readme.appendText("README.txt".readFileContent())
     }
 
     @Test
-    fun `GIVEN an extension with title==null VERIFY the CHANGELOG content`() {
+    fun `GIVEN a README file REPLACE the first dependency`() {
 
-        val content = """
-            * test
-            * test
-        """.trimIndent()
+        val version = "(\\d)+\\.(\\d)+\\.(\\d)+"
 
-        val sut = updateChangelogByContent(
-            File(changelogFile.path), content, null, "1.0.1"
+        val sut = updateDocument(
+            readme,
+            "io.github.carmelo:test-lib:$version",
+            "io.github.carmelo:test-lib:2.0.0"
         )
         sut.assertEquals(expectedRes1)
     }
 
     @Test
-    fun `GIVEN an extension with title!=null VERIFY the CHANGELOG content`() {
+    fun `GIVEN a README file REPLACE the second dependency`() {
 
-        val content = """
-            * test
-            * test
-        """.trimIndent()
+        val sut = updateDocument(
+            readme,
+            "io.github.fabio:android-lib:0.0.9",
+            "io.github.fabio:android-lib:0.1.1"
+        )
+        sut.assertEquals(expectedRes2)
+    }
 
-        val sut = updateChangelogByContent(
-            File(changelogFile.path), content, "## my template", "1.0.1"
+    @Test(expected = GradleException::class)
+    fun `GIVEN a missing file VERIFY that it throws an exception`() {
+
+        val sut = updateDocument(
+            File("INVALID.path"),
+            "io.github.fabio:android-lib:0.0.9",
+            "io.github.fabio:android-lib:0.1.1"
         )
         sut.assertEquals(expectedRes2)
     }
 
     private val expectedRes1 = """
-        ## 1.0.1 (${SimpleDateFormat("MMMM, DD, YYYY").format(Date())})
-        * test
-        * test
+        # Library
+        ## Install
 
-        ## 0.0.0 (January, 1, 2021)
-        * first feature
-        * second feature
+        ```java
+                io.github.carmelo:test-lib:2.0.0
+                io.github.fabio:android-lib:0.0.9
+                io.github.iriti:java-lib:0.2.0
+        ```
     """.trimIndent()
 
     private val expectedRes2 = """
-        ## my template
-        * test
-        * test
+        # Library
+        ## Install
 
-        ## 0.0.0 (January, 1, 2021)
-        * first feature
-        * second feature
+        ```java
+                io.github.carmelo:test-lib:1.0.0
+                io.github.fabio:android-lib:0.1.1
+                io.github.iriti:java-lib:0.2.0
+        ```
     """.trimIndent()
+
 }

@@ -22,8 +22,8 @@ class ReplaceInFilePluginTest {
         testProjectDir.newFile("build.gradle")
     }
 
-    private val changelogFile: File by lazy {
-        testProjectDir.newFile("CHANGELOG.md")
+    private val readme: File by lazy {
+        testProjectDir.newFile("README.md")
     }
 
     private val gradleRunner: GradleRunner by lazy {
@@ -37,7 +37,7 @@ class ReplaceInFilePluginTest {
     @Before
     fun setup() {
         buildFile.appendText("build.gradle.txt".readFileContent())
-        changelogFile.appendText("CHANGELOG.txt".readFileContent())
+        readme.appendText("README.txt".readFileContent())
     }
 
     @Test
@@ -45,10 +45,19 @@ class ReplaceInFilePluginTest {
 
         buildFile.appendText(
             "\n" + """
-            changeLogConfig{
-                changeLogPath = "${changelogFile.path}"
-                content = "$content"
-                version = "1.0.1"
+            replaceInFileConfig{
+                docs{
+                    doc{
+                        path = "${readme.path}"
+                        find = "io.github.carmelo:test-lib:(\\d)+\\.(\\d)+\\.(\\d)+"
+                        replaceWith = "io.github.carmelo:test-lib:2.0.0"
+                    }
+                    doc1{
+                        path = "${readme.path}"
+                        find = "io.github.fabio:android-lib:0.0.9"
+                        replaceWith = "io.github.fabio:android-lib:0.1.1"
+                    }
+                }
             }
             """.trimIndent()
         )
@@ -58,50 +67,17 @@ class ReplaceInFilePluginTest {
             .build()
 
         Assert.assertEquals(TaskOutcome.SUCCESS, res.task(":$TASK_NAME")!!.outcome)
-        changelogFile.readText().assertEquals(expectedRes1)
+        readme.readText().assertEquals(expectedRes1)
     }
-
-    @Test
-    fun `GIVEN an config block with title!=null VERIFY the CHANGELOG content`() {
-
-        buildFile.appendText(
-            "\n" + """
-            changeLogConfig{
-                changeLogPath = "${changelogFile.path}"
-                title = "## my template"
-                content = "$content"
-                version = "1.0.1"
-            }
-            """.trimIndent()
-        )
-
-        val res = gradleRunner
-            .withArguments(TASK_NAME)
-            .build()
-
-        Assert.assertEquals(TaskOutcome.SUCCESS, res.task(":$TASK_NAME")!!.outcome)
-        changelogFile.readText().assertEquals(expectedRes2)
-    }
-
-    private val content = """
-            * test
-    """.trimIndent()
 
     private val expectedRes1 = """
-        ## 1.0.1 (${SimpleDateFormat("MMMM, DD, YYYY").format(Date())})
-        * test
+        # Library
+        ## Install
 
-        ## 0.0.0 (January, 1, 2021)
-        * first feature
-        * second feature
-    """.trimIndent()
-
-    private val expectedRes2 = """
-        ## my template
-        * test
-
-        ## 0.0.0 (January, 1, 2021)
-        * first feature
-        * second feature
+        ```java
+                io.github.carmelo:test-lib:2.0.0
+                io.github.fabio:android-lib:0.1.1
+                io.github.iriti:java-lib:0.2.0
+        ```
     """.trimIndent()
 }

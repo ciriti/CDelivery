@@ -3,10 +3,9 @@ package io.github.ciriti.replaceinfile
 import io.github.ciriti.replaceinfile.Constants.GROUP
 import org.gradle.api.DefaultTask
 import org.gradle.api.GradleException
+import org.gradle.api.NamedDomainObjectContainer
 import org.gradle.api.tasks.TaskAction
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.* // ktlint-disable
 import javax.inject.Inject
 
 open class ReplaceInFileTask @Inject constructor(
@@ -19,42 +18,32 @@ open class ReplaceInFileTask @Inject constructor(
 
     @TaskAction
     fun execute() {
-        val content = updateChangelogByContent(
-            File(ext.changeLogPath),
-            ext.content,
-            ext.title,
-            ext.version
-        )
-        println(content)
+        val sb = StringBuilder()
+        val list: NamedDomainObjectContainer<Doc> = ext.docs
+        println(list)
+        list
+            .forEach {
+                val content = updateDocument(
+                    file = File(it.path),
+                    oldText = it.find,
+                    newText = it.replaceWith
+                )
+                sb.append(content+"\n")
+            }
+        println(sb.toString())
     }
 
     companion object {
-        fun updateChangelogByContent(changeLog: File, content: String?, pTitle: String?, version: String): String {
-            val date: String = SimpleDateFormat("MMMM, DD, YYYY").format(Date())
-            val title: String = pTitle ?: "## $version ($date)"
-
-            // CHANGELOG.md
-            if (!changeLog.exists()) throw GradleException(
-                """
-                ${changeLog.name} [${changeLog.path}] doesn't exist!!!
+        fun updateDocument(file: File, oldText: String, newText: String): String {
+            if (!file.exists()) throw GradleException("""
+                ${file.name} [${file.path}] doesn't exist!!!
                 """.trimIndent()
             )
-            val changeLogContent = changeLog.readText(charset = Charsets.UTF_8)
-            val releaseNoteContent: String = content ?: throw GradleException(noConfigClosureErrorMessage)
-            val updatedChangeLog =
-                "$title\n${releaseNoteContent.trim()}\n\n$changeLogContent".trimMargin()
-            changeLog.writeText(text = updatedChangeLog, charset = Charsets.UTF_8)
-            return changeLog.readText()
+            val readmeContent = file.readText(charset = Charsets.UTF_8)
+            val updateReadme = readmeContent.replace(oldText.toRegex(), newText)
+            // README.md content updated
+            file.writeText(text = updateReadme, charset = Charsets.UTF_8)
+            return file.readText()
         }
-
-        val noConfigClosureErrorMessage = """
-            the [content] field cannot be null!!
-            Please add the config field. Ex:
-            ...
-            changeLogConfig{
-                content = ""
-            }
-            ...
-        """.trimIndent()
     }
 }
