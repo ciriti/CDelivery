@@ -38,7 +38,7 @@ jobs:
         run: |
           echo 'RELEASE_NOTE<<EOF' >> $GITHUB_ENV
           cat release_note.txt >> $GITHUB_ENV
-          echo
+          echo \n
           echo 'EOF' >> $GITHUB_ENV
       - name: Create Release
         id: create_release
