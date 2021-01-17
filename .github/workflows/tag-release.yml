@@ -2,7 +2,9 @@ name: GitHub Tag and Release
 
 on:
   push:
-    branches:  [ master ] #[ release/* ]
+    branches:
+      - master
+      - tag-release-reload
 
 jobs:
   build:
