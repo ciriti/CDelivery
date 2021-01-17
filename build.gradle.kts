@@ -50,14 +50,14 @@ tasks.register("versionTxt") {
 }
 
 addCommitPushConfig {
-    fileList = listOf(
-        "${rootDir.path}/CHANGELOG.md",
-        "${rootDir.path}/bump-version-code/README.md",
-        "${rootDir.path}/changelog-update/README.md",
-        "${rootDir.path}/git-utils/README.md",
-        "${rootDir.path}/replace-in-file/README.md",
-        "${rootDir.path}/README.md"
-    )
+    fileList = project
+        .subprojects
+        .map { "${rootDir.path}/$it/README.md" }
+        .toMutableList()
+        .apply {
+            add("${rootDir.path}/CHANGELOG.md")
+            add("${rootDir.path}/README.md")
+        }
 }
 
 replaceInFile {
@@ -72,4 +72,11 @@ replaceInFile {
             }
         }
     }
+}
+
+changeLogConfig {
+    val versionName = rootProject.extra.get("VERSION_NAME") as String
+    changeLogPath = rootDir.path + "/CHANGELOG.md"
+    content = file(rootDir.path + "/release_note.txt").readText()
+    version = "$versionName"
 }
