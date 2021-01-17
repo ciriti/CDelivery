@@ -64,7 +64,6 @@ replaceInFile {
     val versionName = rootProject.extra.get("VERSION_NAME") as String
     docs {
         project.subprojects.forEachIndexed { index, project ->
-            println("===============" + project.name)
             create("doc$index") {
                 path = "${rootDir.path}/${project.name}/README.md"
                 find = "version \"(\\d)+\\.(\\d)+\\.(\\d)+\""

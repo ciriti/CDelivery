@@ -14,4 +14,8 @@
 [![Bintray](https://img.shields.io/bintray/v/ciriti/cdelivery/gitutils-plugin?color=blue&label=Gradle%20Portal%20Git%20Utils)](https://plugins.gradle.org/plugin/io.github.git-utils)
 # C-Delivery 
 
-TODO
+## Plugins list
+- [Bump versionCode](bump-version-code/README.md)  
+- [Update CHANGELOG.md](changelog-update/README.md)  
+- [Git utils](git-utils/README.md)  
+- [Replace in file](replace-in-file/README.md)  
