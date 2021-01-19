@@ -28,7 +28,7 @@ interface AppendableErrorOutput : Appendable {
     val output: List<String>
 }
 
-fun createAppendableLog(list: MutableList<String>) : AppendableErrorOutput{
+fun createAppendableLog(list: MutableList<String>): AppendableErrorOutput {
     return AppendableErrorOutputImpl(list)
 }
 
