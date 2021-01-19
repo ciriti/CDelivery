@@ -7,12 +7,12 @@
 
 ```groovy
 plugins {
-  id "io.github.bump-versioncode" version "0.5.2"
+  id "io.github.bump-versioncode" version "0.5.3"
 }
 ```
 ```kotlin
 plugins {
-  id("io.github.bump-versioncode") version "0.5.2"
+  id("io.github.bump-versioncode") version "0.5.3"
 }
 ```
 
