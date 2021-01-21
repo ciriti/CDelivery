@@ -1,9 +1,9 @@
 name: Test and publish
 on:
   push:
-    branches: [ develop ]
-    paths:
-      - '!README.md'
+    branches: [ git-utils-dr ]
+#    paths:
+#      - '!README.md'
 #      - '!*.yml'
 #      - '!art/**'
 #      - '!build.gradle'
@@ -20,7 +20,7 @@ jobs:
           java-version: 1.8
       - name: Lint and tests
         run: |
-          ./gradlew ktlint test
+          ./gradlew  git-utils:test git-utils-dr:test
       - name: 'Publish Plugin Test Report'
         if: always()
         uses: actions/upload-artifact@v2-preview
